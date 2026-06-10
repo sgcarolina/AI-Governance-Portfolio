@@ -1,1 +1,76 @@
+What is it?
+Cohere is an enterprise-focused artificial intelligence platform that provides large language models (LLMs), generative AI capabilities, embeddings, retrieval, and AI agents. It is designed for organizations that want to deploy AI securely while maintaining control over their data.
+What does it do?
+Cohere provides:
 
+Large Language Models (LLMs) for text generation and summarization
+Retrieval-Augmented Generation (RAG)
+AI-powered search and question answering
+Document analysis and knowledge management
+Text classification and sentiment analysis
+AI agents that can perform multi-step tasks
+Embeddings for semantic search and retrieval
+Private deployment options (cloud, VPC, or on-premises)
+
+Common use cases include:
+
+Chatbots and virtual assistants
+Enterprise search
+Policy and procedure lookup
+Customer support automation
+Compliance and regulatory document analysis
+Content generation and summarization
+
+Who would use it?
+Departments most likely to deploy Cohere:
+
+Data Engineering — building internal semantic search and document retrieval pipelines across policy and claims data
+IT and Infrastructure — managing private deployment, VPC configuration, and model hosting within USAA's security perimeter
+Enterprise AI / Innovation Teams — evaluating and operationalizing LLM capabilities across business units
+Member Services / Contact Center — powering AI-assisted search for agents handling member inquiries
+Legal, Compliance, and Risk — surfacing regulatory documents, policy language, and audit trails through intelligent search
+Security Risk — leveraging access controls, audit logging, and red-teaming outputs for model oversight
+Claims and Underwriting — automating document summarization and structured data extraction from complex files
+
+Roles most likely hands-on with the platform:
+
+AI/ML Engineers and Data Scientists building and fine-tuning RAG pipelines
+Enterprise Architects designing secure deployment topology
+AI Governance and Risk leads (your lane) — evaluating vendor controls, classifying model risk, and mapping Cohere's compliance certifications to SR 11-7 and NIST AI RMF requirements
+IT Security and IAM teams managing identity provider integrations and role-based access
+Product Owners sponsoring AI-enabled workflows within business units
+
+What business problem does it solve?
+Cohere solves the problem of enterprise AI adoption under regulatory and data sovereignty pressure. Cohere helps organizations unlock value from large amounts of unstructured data (documents, emails, policies, knowledge bases, and records) by enabling employees and customers to find information, generate content, and automate knowledge-based tasks using AI.
+
+What integrations exist?
+Cloud Platforms
+
+Microsoft Azure
+Amazon Web Services (AWS)
+Google Cloud Platform (GCP)
+Enterprise Data Sources
+SharePoint
+Confluence
+Salesforce
+ServiceNow
+Box
+Google Drive
+
+Development & AI Ecosystem
+
+LangChain
+LlamaIndex
+Vector databases such as:
+Pinecone
+Weaviate
+Milvus
+
+Security & Identity
+
+SAML
+Single Sign-On (SSO)
+Role-Based Access Control (RBAC)
+Enterprise Identity Providers such as:
+Okta
+Microsoft Entra ID
