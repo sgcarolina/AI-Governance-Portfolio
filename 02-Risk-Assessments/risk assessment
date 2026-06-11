@@ -1,18 +1,358 @@
-Build your own risk assessment.
+# Cohere AI Platform — Enterprise Risk Assessment
+ Aligned to NIST AI RMF, SR 11-7, NIST CFS, GDPR & EU AI ACT 
 
-Minimum categories:
+# Cohere AI Platform — Enterprise Risk Assessment
 
-Security
-Privacy
-Compliance
-Third Party
-Data Protection
-Human Oversight
-Operational Risk
-Reputational Risk
 
-For each:
+---
 
-Risk
-Impact
-Mitigation
+## Summary
+
+| Severity | Count |
+|----------|-------|
+| 🔴 High | 11 |
+| 🟡 Medium | 10 |
+| 🟢 Low | 3 |
+
+---
+
+## 1. Security
+
+---
+
+Risk — Prompt injection and adversarial input attacks
+
+Impact —** Malicious inputs could manipulate model outputs, exfiltrate data embedded in responses, or bypass enterprise content filters — exposing member PII or proprietary financial data.
+
+Mitigation — Implement input/output sanitization layers before Cohere API calls. Apply content filtering policies via North's agent autonomy controls. Log all prompts and completions for anomaly detection. Align to NIST AI RMF MANAGE 2.2.
+
+Severity — 🔴 High
+
+Frameworks —NIST AI RMF, SR 11-7
+
+---
+
+Risk — API key exposure and credential mismanagement
+
+Impact — Exposed API credentials could allow unauthorized access to Cohere endpoints, enabling data extraction or generation of harmful content at enterprise scale.
+
+Mitigation — Store credentials in enterprise secrets management (e.g., HashiCorp Vault). Rotate keys on a defined schedule. Enforce least-privilege access via IAM. Audit usage logs monthly.
+
+Severity — 🔴 High
+
+Frameworks — ISO 27001, NIST CSF
+
+---
+
+Risk — Model inference endpoint exposure
+
+Impact — Publicly accessible or insufficiently protected inference endpoints could be probed to extract model behavior patterns or enable denial-of-service conditions.
+
+Mitigation — Deploy Cohere via private VPC or on-premises using Model Vault. Restrict endpoint access to internal network only. Apply rate limiting and WAF rules at the API gateway layer.
+
+Severity — 🟡 Medium
+
+Frameworks — NIST AI RMF, ISO 27001
+
+---
+
+## 2. Privacy
+
+---
+
+Risk — Member PII ingested into RAG pipelines
+
+Impact — If member financial data, SSNs, or account details are included in documents fed to Cohere's Embed or Rerank models, the platform may retain or expose that data outside enterprise control.
+
+Mitigation — Enforce PII scrubbing before document ingestion using entity recognition pipelines. Apply data classification gates upstream of RAG workflows. Validate Cohere's 30-day SaaS log deletion policy against internal retention requirements.
+
+Severity — 🔴 High
+
+Frameworks — GLBA, CCPA, NIST Privacy Framework
+
+---
+
+Risk —Cross-tenant data leakage in SaaS deployment
+
+Impact — SaaS deployment introduces residual risk of tenant isolation failure — member data could surface in another organization's query responses.
+
+Mitigation — Prefer private VPC or on-premises deployment for member-data workloads. Review Cohere's SOC 2 Type II report and tenant isolation architecture documentation. Require contractual data processing addendum.
+
+Severity — 🔴 High
+
+Frameworks — SOC 2, ISO 27001
+
+---
+
+Risk — Model training on enterprise prompts
+
+Impact — Without explicit contractual protections, enterprise query data submitted to Cohere could be used for model fine-tuning, violating member data agreements.
+
+Mitigation — Require Data Processing Addendum (DPA) explicitly prohibiting training on customer data. Validate zero-retention configuration for SaaS usage. Review Cohere's enterprise data commitments documentation annually.
+
+Severity — 🟡 Medium
+
+Frameworks —GLBA, CCPA
+
+---
+
+## 3. Compliance
+
+---
+
+Risk — Regulatory examination readiness gap
+
+Impact — Federal banking regulators (OCC, Federal Reserve) expect model risk management documentation aligned to SR 11-7. Undocumented Cohere deployments expose the institution to MRM examination findings.
+
+Mitigation — Classify Cohere-powered models under the SR 11-7 model inventory. Document model purpose, inputs, outputs, and limitations. Conduct initial and ongoing model validation including conceptual soundness review and outcome analysis.
+
+Severity — 🔴 High
+
+Frameworks — SR 11-7, OCC
+
+---
+
+Risk — AI Act and emerging regulatory non-compliance
+
+Impact — EU AI Act high-risk classification triggers mandatory conformity assessments, bias testing, and human oversight requirements. Financial services AI is explicitly in scope.
+
+Mitigation — Conduct AI risk classification assessment per NIST AI RMF GOVERN 1.1 and EU AI Act Annex III criteria. Document intended use cases to support classification. Implement bias monitoring for credit, underwriting, or member-facing applications.
+
+Severity — 🔴 High
+
+Frameworks — EU AI Act, NIST AI RMF
+
+---
+
+Risk — ISO 42001 alignment gap
+
+Impact — Cohere holds ISO 42001 certification; the enterprise may lack an equivalent AI management system, creating asymmetry in vendor versus internal governance maturity.
+
+Mitigation —Use Cohere's ISO 42001 posture as a benchmark for internal AI management system development. Map existing AI governance policies to ISO 42001 controls. Identify gaps and build a remediation roadmap.
+
+Severity — 🟡 Medium
+
+Frameworks — ISO 42001
+
+---
+
+## 4. Third-Party Risk
+
+---
+
+Risk — Vendor concentration and single-provider dependency
+
+Impact — Deep integration of Cohere into enterprise workflows creates switching costs and business continuity exposure if Cohere experiences service disruption, acquisition, or pricing restructuring.
+
+Mitigation — Maintain a multi-model strategy (cloud-agnostic architecture). Document fallback workflows for critical Cohere-dependent processes. Include SLA, uptime guarantees, and exit clauses in enterprise contract. Review vendor financial health annually.
+
+Severity — 🔴 High
+
+Frameworks — SR 11-7, NIST AI RMF
+
+---
+
+Risk — Insufficient vendor AI risk transparency
+
+Impact — Limited visibility into Cohere's model training data, update cadence, and internal safety practices makes it difficult to assess downstream risk changes introduced by model updates.
+
+Mitigation — Require advance notification of model version changes per contract terms. Conduct re-validation or regression testing after major model updates. Maintain a vendor AI risk dossier updated quarterly.
+
+Severity — 🟡 Medium
+
+Frameworks — SR 11-7
+
+---
+
+Risk — Fourth-party risk via Cohere's cloud infrastructure partners
+
+Impact — Cohere deploys via AWS, Azure, GCP, and Oracle. Incidents at those providers cascade into Cohere availability, even for private deployment configurations.
+
+Mitigation — Map Cohere's cloud infrastructure dependencies in the enterprise's fourth-party risk register. Assess provider concentration risk. Include Cohere in BCM/DR planning and test recovery runbooks annually.
+
+Severity — 🟡 Medium
+
+Frameworks — NIST CSF, ISO 27001
+
+---
+
+## 5. Data Protection
+
+---
+
+Risk — Data residency violations for regulated member data
+
+Impact — If enterprise data leaves the defined geographic boundary (e.g., US-only for GLBA compliance), regulatory violations and member trust damage could result.
+
+Mitigation — Configure Cohere deployment to enforce data residency via US-region VPC or on-premises Model Vault deployment. Validate residency configuration at implementation and after any infrastructure changes. Document in data flow diagrams.
+
+Severity — 🔴 High
+
+Frameworks — GLBA, CCPA, ISO 27001
+
+---
+
+Risk — Inadequate data retention and deletion controls
+
+Impact — Cohere's SaaS platform deletes logs after 30 days by default, but flagged content is retained indefinitely. This may conflict with enterprise data lifecycle management policies.
+
+Mitigation — Map Cohere's retention behavior to the enterprise data retention schedule. Escalate conflicts to the Privacy Office. For sensitive workloads, use private deployment where the enterprise controls all retention settings.
+
+Severity — 🟡 Medium
+
+Frameworks — GLBA, NIST Privacy Framework
+
+---
+
+Risk — Unstructured data governance in RAG pipelines
+
+Impact — Documents ingested for retrieval may include stale, unauthorized, or sensitive content that gets surfaced to end users without proper access controls.
+
+Mitigation — Implement document-level metadata tagging and access control before ingestion. Apply North's role-based access controls to limit retrieval scope by user role. Audit ingested document sources quarterly.
+
+Severity — 🟢 Low
+
+Frameworks — NIST AI RMF, ISO 27001
+
+---
+
+## 6. Human Oversight
+
+---
+
+Risk — Automation bias in AI-assisted decisioning
+
+Impact — Staff may over-rely on Cohere-generated outputs in member-facing decisions (claims, underwriting, service routing), reducing critical judgment and increasing error propagation at scale.
+
+Mitigation — Establish human-in-the-loop review requirements for consequential decisions. Define clear escalation thresholds where AI output requires human sign-off. Include automation bias awareness in AI literacy training for affected roles.
+
+Severity — 🔴 High
+
+Frameworks — NIST AI RMF, EU AI Act, SR 11-7
+
+---
+
+Risk — Insufficient override and feedback mechanisms
+
+Impact — Without structured channels for staff to flag incorrect or harmful AI outputs, errors compound undetected — degrading model utility and increasing compliance exposure over time.
+
+Mitigation — Build human feedback loops into every Cohere-powered workflow (thumbs down, flagging, escalation path). Route feedback to the AI governance team monthly. Use feedback data to inform model performance reporting.
+
+Severity — 🟡 Medium
+
+Frameworks — NIST AI RMF MANAGE, SR 11-7
+
+---
+
+Risk — Accountability gaps when AI and human decisions intersect
+
+Impact — Unclear ownership of outcomes in human-AI collaborative workflows creates compliance and audit risk — especially where adverse member outcomes occur.
+
+Mitigation — Define decision accountability in RACI documentation for each AI-assisted workflow. Capture AI involvement in audit trails. Ensure adverse action notices comply with ECOA and FCRA requirements where applicable.
+
+Severity — 🟢 Low
+
+Frameworks — ECOA, FCRA, SR 11-7
+
+---
+
+## 7. Operational Risk
+
+---
+
+Risk — Model drift degrading output quality over time
+
+Impact — Cohere model updates or shifts in enterprise data distribution can cause silent degradation in output accuracy — creating downstream errors in member service, document processing, or compliance workflows.
+
+Mitigation — Implement ongoing performance monitoring with defined thresholds triggering review. Align to SR 11-7 ongoing monitoring requirements. Establish a model change management process that includes regression testing before production updates.
+
+Severity — 🔴 High
+
+Frameworks — SR 11-7, NIST AI RMF MANAGE
+
+---
+
+Risk — Integration failure between Cohere and legacy systems
+
+Impact — API failures, schema mismatches, or latency spikes between Cohere and enterprise systems (CRM, claims platforms, knowledge bases) could disrupt member-facing services.
+
+Mitigation — Design integration layer with circuit breakers and graceful degradation. Test integration points in staging before production deployment. Include Cohere API dependencies in incident response runbooks.
+
+Severity — 🟡 Medium
+
+Frameworks —*NIST CSF, ISO 27001
+
+---
+
+Risk — Shadow AI deployment outside governance framework
+
+Impact — Business units could independently deploy Cohere APIs without AI governance review — creating untracked model risk, data exposure, and compliance gaps invisible to the enterprise risk function.
+
+Mitigation — Publish an approved AI tools list and intake process. Enforce API key provisioning through the AI governance team. Conduct quarterly shadow AI audits across business units. Communicate consequences of non-sanctioned deployments.
+
+Severity — 🟡 Medium
+
+Frameworks — NIST AI RMF GOVERN, SR 11-7
+
+---
+
+## 8. Reputational Risk
+
+---
+
+Risk — Biased or discriminatory AI outputs affecting members
+
+Impact — Cohere outputs used in member communications, service routing, or decisioning could reflect training data biases — resulting in disparate treatment findings, regulatory action, and media exposure.
+
+Mitigation — Conduct bias evaluation before deployment of any member-facing use case. Test across protected class proxies aligned to ECOA and fair lending requirements. Document bias testing methodology and results in the model risk dossier.
+
+Severity — 🔴 High
+
+Frameworks - ECOA, CFPB, EU AI Act
+
+---
+
+Risk — Hallucinated outputs damaging member trust
+
+Impact — Cohere generating factually incorrect information about policies, benefits, or account details — delivered to members or staff — erodes trust and creates potential liability.
+
+Mitigation — Use RAG architecture with grounded retrieval to anchor responses in verified enterprise content. Implement confidence thresholds with fallback to human agents below threshold. Add visible AI disclosure to member-facing interactions.
+
+Severity — 🟡 Medium
+
+Frameworks — NIST AI RMF, CFPB
+
+---
+
+Risk — Negative public perception of AI adoption
+
+Impact — Public or employee backlash against AI use in financial services could damage brand reputation, particularly if adoption outpaces transparent communication.
+
+Mitigation —* Develop internal and external AI transparency communications. Publish AI use principles on the enterprise website. Engage employee communications teams before major AI deployments. Monitor media and social sentiment.
+
+Severity — 🟢 Low
+
+Frameworks — NIST AI RMF GOVERN
+
+---
+
+## Regulatory Framework Reference
+
+| Framework | Relevance |
+|-----------|-----------|
+| SR 11-7 | Model risk management — inventory, validation, ongoing monitoring |
+| NIST AI RMF | GOVERN, MAP, MEASURE, MANAGE functions across all risk domains |
+| GLBA | Member financial data protection and privacy requirements |
+| CCPA | Consumer data rights and consent obligations |
+| EU AI Act | High-risk AI classification, bias testing, human oversight mandates |
+| ISO 42001 | AI management system standard — vendor benchmark and internal gap analysis |
+| ISO 27001 | Information security controls for AI infrastructure |
+| SOC 2 Type II | Vendor trust services criteria — security, availability, confidentiality |
+| ECOA / FCRA | Fair lending and adverse action requirements for AI-assisted decisions |
+| CFPB | Consumer financial protection in AI-driven member interactions |
+| OCC | Federal banking examination readiness for model risk programs |
+| NIST CSF | Cybersecurity framework for operational and infrastructure risk |
+
+---
+
+*This assessment was produced as part of an AI Governance portfolio. It is intended for educational and professional demonstration purposes.*
