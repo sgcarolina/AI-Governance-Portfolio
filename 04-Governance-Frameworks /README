@@ -1,1 +1,289 @@
-# Governance Frameworks 
+# AI Governance Framework
+Cohere AI Platform
+
+**Document Type:** AI Governance Framework
+**Classification:** Internal — Governance Use Only
+**Prepared By:** AI Governance Lead
+**Date:** June 2026
+**Repository Location:** 04-Governance-Frameworks
+
+---
+
+Section 1: Executive Summary
+
+Cohere is an enterprise AI platform purpose-built for organizations that cannot afford to compromise on data security, regulatory compliance, or operational control. Unlike general-purpose consumer AI tools, Cohere was designed from the ground up for private deployment — giving the organization the ability to run large language model capabilities entirely within its own network boundary. The platform's core capabilities include retrieval-augmented generation through Command and Embed, intelligent enterprise search through Compass, and agentic workflow automation through North. Cohere holds SOC 2 Type II, ISO 27001, and ISO 42001 certifications, making it one of the few AI platforms with documented alignment to the international standard for AI management systems.
+
+The organization is pursuing Cohere to solve three operational problems that have resisted resolution through existing tooling. Contact center staff spend significant time manually searching policy documents and claims records to answer member inquiries accurately and quickly. Document-heavy workflows in claims and underwriting require summarization and data extraction at a volume that exceeds manual capacity. And enterprise search across unstructured internal data remains inconsistent, particularly across multilingual documents and mixed file formats. Cohere addresses all three through grounded, retrieval-based AI that keeps member data inside the enterprise perimeter — a non-negotiable requirement for a regulated financial services institution operating under GLBA, SR 11-7, and OCC model risk management expectations.
+
+---
+
+Section 2: Governance Structure (RACI)
+
+The following RACI defines accountability for governing the Cohere platform across its lifecycle from intake through ongoing monitoring.
+
+R = Responsible | A = Accountable | C = Consulted | I = Informed
+
+| Role                    | Intake and Risk Classification | Deployment Approval | Control Implementation | Ongoing Monitoring  | Incident Response | Annual Review |
+|------------             |------------------------------- |-------------------- |----------------------- |-------------------  |------------------ |---------------|
+| Business Owner          | R                              | A                   | I                      | I                   | I                 | C 
+| AI Governance Lead      | A                              | A                   | C                      | A                   | A                 | A 
+| Model Risk Officer      | C                              | C                   | C                      | R                   | C                 | R 
+| IT Security Engineer    | C                              | R                   | R                      | R                   | R                 | C 
+| Privacy Officer         | C                              | R                   | C                      | C                   | C                 | R 
+| Data Engineering Lead   | I                              | C                   | R                      | R                   | C                 | I 
+| Legal and Vendor Management | C                          | C                   | R                      | I                   | I                 | R 
+| Cloud Infrastructure Lead | I                            | C                   | R                      | R                   | R                 | I 
+| Change Advisory Board   | I                              | R                   | I                      | I                   | C                 | I 
+| Chief Risk Officer      | I                              | I                   | I                      | I                   | A                 | A 
+| AI Governance Committee | I                              | A                   | I                      | I                   | I                 | A 
+
+Role Definitions
+
+Business Owner — Owns the business use case, defines the intended use, and is accountable for outcomes produced by Cohere-powered workflows within their function. Primary business ownership sits with the Enterprise AI and Innovation Team with secondary ownership extending to Data Engineering and Member Services.
+
+AI Governance Lead — Holds governance oversight responsibility across the full Cohere lifecycle including intake, risk classification, control validation, monitoring, and annual revalidation. Serves as the primary point of contact for regulatory examination inquiries related to Cohere deployments.
+
+Model Risk Officer — Responsible for model validation, conceptual soundness review, and ongoing monitoring cadence aligned to SR 11-7. Maintains independence from model development teams per SR 11-7 requirements.
+
+IT Security Engineer — Responsible for security control implementation including IAM configuration, SIEM integration, endpoint protection, and incident response coordination.
+
+Privacy Officer — Reviews all data handling configurations, validates PII scrubbing effectiveness, executes Data Processing Addendum oversight, and approves any use case involving restricted or regulated member data.
+
+Data Engineering Lead — Responsible for building and maintaining PII scrubbing pipelines, RAG ingestion workflows, and retrieval source management upstream of Cohere.
+
+Legal and Vendor Management — Responsible for DPA execution, contract management, and ongoing vendor obligation tracking.
+
+Cloud Infrastructure Lead — Responsible for private VPC and Model Vault deployment configuration, data residency validation, and infrastructure change management.
+
+Change Advisory Board — Reviews and approves all material changes to Cohere-powered workflows before production deployment.
+
+Chief Risk Officer — Accountable for enterprise risk posture related to Cohere and receives quarterly monitoring reports and annual revalidation summaries.
+
+AI Governance Committee — Accountable for final deployment approval decisions and reviews escalated risk findings, use case classification, and annual governance assessments.
+
+---
+
+ Section 3: Risk Tiering
+
+Cohere Platform Risk Tier: HIGH
+
+Cohere is classified as a High Risk platform under the enterprise AI risk tiering framework. This classification is driven by the nature of the data the platform will process, the member populations it will interact with, the regulatory environment governing the organization, and the potential downstream impact of model errors or failures.
+
+Factors Supporting High Risk Classification**
+
+Cohere-powered workflows will process or inform decisions involving member financial data, regulated personal information subject to GLBA and CCPA, and member-facing interactions where output errors carry direct financial or reputational consequences. Several intended use cases — including AI-assisted claims routing, underwriting support, and contact center response generation — involve data and decisions that are explicitly cited as high-risk categories under the EU AI Act Annex III and fall within the scope of SR 11-7 model risk management requirements.
+
+The platform also introduces third-party model dependency risk. The organization does not control Cohere's underlying model training, update cadence, or internal safety practices, which means material changes to model behavior could occur between validation cycles without advance notice. This elevates residual risk above what would be acceptable for a medium-tier classification.
+
+Finally, the potential for autonomous or near-autonomous AI-assisted decisioning in member-facing workflows — where hallucinated outputs or biased recommendations could result in adverse member outcomes, fair lending violations, or regulatory findings — anchors the classification firmly in the high-risk tier.
+
+Risk Tier Summary
+
+| Factor | Assessment |
+|--------|------------|
+| Data sensitivity | High — member PII, regulated financial data |
+| Regulatory exposure | High — GLBA, SR 11-7, OCC, ECOA, CFPB |
+| Member impact potential | High — member-facing decisions and communications |
+| Autonomy level | Medium to High — human-in-the-loop required |
+| Third-party dependency | High — vendor model updates outside enterprise control |
+| Deployment complexity | High — private VPC or on-premises required |
+| Overall Risk Tier | HIGH |
+
+High-risk classification requires AI Governance Committee approval before production deployment, independent model validation per SR 11-7, bias evaluation prior to any member-facing use case launch, and quarterly monitoring with annual revalidation.
+
+---
+ Section 4: Approval Process
+
+The following approval workflow applies to all Cohere use cases. High-risk classification means no use case may enter production without completing every stage of this process.
+
+```
+Business Unit Submits Governance Intake Request
+(AI Governance Intake Form — completed by Business Owner)
+↓
+AI Governance Lead Conducts Use Case Review
+(Risk classification, intended use validation, prohibited use check,
+data classification confirmation, RACI assignment)
+↓
+Security Review
+(IT Security Engineer — endpoint configuration, IAM design,
+logging requirements, threat surface assessment)
+↓
+Privacy Review
+(Privacy Officer — data residency validation, PII scrubbing confirmation,
+DPA status verification, retention mapping)
+↓
+Model Risk Review
+(Model Risk Officer — SR 11-7 inventory registration,
+validation plan development, validator independence confirmation)
+↓
+Legal and Vendor Review
+(Legal and Vendor Management — DPA execution confirmation,
+SLA and contract obligations review, exit clause validation)
+↓
+Change Advisory Board Review
+(Pre-production testing gate, regression test results,
+deployment configuration approval)
+↓
+AI Governance Committee Approval Decision
+(Approve / Approve with Conditions / Reject)
+↓
+Controlled Production Deployment
+(Phased rollout with monitoring active from day one)
+↓
+Ongoing Monitoring and Quarterly Reporting
+(AI Governance Lead — continuous through annual revalidation)
+```
+
+Decision Outcomes
+
+Approve — All controls are implemented, validated, and documented. Use case may proceed to production deployment on the agreed timeline.
+
+Approve with Conditions — Use case may proceed under defined conditions with a remediation deadline. AI Governance Lead tracks condition closure. Unresolved conditions by deadline result in deployment suspension.
+
+Reject — Use case does not meet the minimum control or compliance requirements for the enterprise risk environment. Business Owner may resubmit after addressing identified gaps.
+
+**Escalation**
+
+Any stage of the approval process may escalate to the Chief Risk Officer if a material disagreement arises between reviewing functions or if a risk finding cannot be resolved within the standard review timeline.
+
+---
+
+ Section 5: Control Requirements
+
+The following control groups summarize the requirements from the Cohere AI Governance Controls Framework. Full control documentation including implementation statements, evidence requirements, and NIST SP 800-53 mappings is available in the companion controls library located in 03-Controls-Frameworks.
+
+Access Controls
+- Role-based access control restricting Cohere API endpoints to authorized personnel by job function (COHERE-IAM-01 / NIST AC-2)
+- Multi-factor authentication enforced for all North platform users via enterprise identity provider (COHERE-IAM-02 / NIST IA-5)
+- Quarterly entitlement reviews and access recertification for all Cohere credentials
+
+Data Controls
+- PII scrubbing pipeline validated upstream of all RAG ingestion workflows before member data enters Cohere Embed or Rerank (COHERE-DP-01 / NIST PT-2)
+- Data residency enforcement through private VPC or on-premises Model Vault for all member data workloads (COHERE-DP-02 / NIST SC-28)
+- Data Processing Addendum executed with Cohere prohibiting training on enterprise data, reviewed annually (COHERE-DP-03 / NIST SA-9)
+- Data classification confirmed before any document enters a Cohere-powered pipeline
+
+Monitoring Controls
+- Prompt and completion audit logging ingested into enterprise SIEM with 12-month retention and automated anomaly alerting (COHERE-ML-01 / NIST AU-2)
+- Model performance and drift monitoring with defined thresholds triggering governance review quarterly (COHERE-ML-02 / NIST CA-7)
+- Bias and fairness evaluation against protected class proxies pre-deployment and quarterly for member-facing use cases (COHERE-ML-03 / NIST RA-3)
+- Vendor security reassessment annually including SOC 2 Type II, ISO 27001, and ISO 42001 certification refresh (COHERE-TPR-01 / NIST SR-6)
+
+Responsible AI Controls
+- Human approval required for all consequential member decisions informed by Cohere outputs (COHERE-HO-01 / NIST SI-12)
+- User feedback and output flagging mechanism routing flagged outputs to AI Governance Lead within 24 hours (COHERE-HO-02 / NIST SI-2)
+- AI use case risk classification completed before every deployment (COHERE-RAI-01 / NIST RA-2)
+- AI transparency disclosure label required on all member-facing Cohere-powered interfaces (COHERE-RAI-02 / NIST PT-5)
+
+Model Governance Controls
+- SR 11-7 model inventory registration with independent validator assigned before production deployment (COHERE-CR-01 / NIST PM-5)
+- Initial model validation including conceptual soundness review and outcome analysis (COHERE-MG-01 / NIST SA-11)
+- RAG retrieval quality controls including confidence thresholds and quarterly source audits (COHERE-MG-02 / NIST SI-10)
+
+Change and Incident Controls
+- AI change control gate requiring governance review and regression testing before any production change (COHERE-CM-01 / NIST CM-3)
+- AI incident response playbook covering Cohere-specific scenarios, tested semi-annually via tabletop exercise (COHERE-IR-01 / NIST IR-8)
+- Model rollback and contingency procedures tested quarterly (COHERE-IR-02 / NIST CP-10)
+
+---
+
+## Section 6: Responsible AI Requirements
+
+**Human Oversight**
+
+Human involvement is required at every point where Cohere outputs could influence a consequential outcome for a member or the organization. Before deployment, every use case must be reviewed and approved through the governance intake process with a documented risk classification. In production, any Cohere output that informs a claims determination, underwriting decision, adverse action, or member-facing communication requires documented human sign-off before action is taken. Outputs falling below the defined RAG confidence threshold are automatically routed to a human agent rather than surfaced to the member. Override rates and escalation frequency are tracked monthly and reviewed by the AI Governance Lead and Business Process Owner. Decisions involving credit, fraud, identity verification, or member benefits are explicitly excluded from full automation regardless of model confidence.
+
+**Transparency**
+
+Members must be informed when they are interacting with AI-generated content. A visible AI disclosure label is required on every member-facing Cohere-powered interface before launch. Disclosure language must be included in updated terms of service. Internally, staff must be informed through onboarding and training materials when they are using Cohere-assisted tools. The AI Governance Lead maintains disclosure documentation as evidence for regulatory examination readiness. Disclosure adequacy is reviewed annually and updated when new member-facing use cases are deployed.
+
+**Accountability**
+
+Accountability for Cohere-powered outcomes is documented in the RACI maintained by the AI Governance Lead for each approved use case. The Business Owner is accountable for outcomes produced within their function. The AI Governance Lead is accountable for governance oversight and monitoring. The Model Risk Officer is accountable for validation and ongoing performance assessment. Audit trails capturing AI involvement in decisions are maintained in the enterprise SIEM and model risk management platform. Adverse action notices for any AI-influenced member decision must comply with ECOA and FCRA requirements and are reviewed by the Legal and Compliance teams before issuance.
+
+**Fairness**
+
+Bias evaluation is required before deployment of any member-facing Cohere use case and repeated quarterly in production. Testing covers protected class proxies including race, gender, age, and national origin using a methodology aligned to ECOA and fair lending requirements. Findings above defined thresholds are escalated immediately to the Fair Lending Officer and Chief Risk Officer. Remediation actions are documented and tracked to closure. Bias test results are included in quarterly AI Governance Committee reporting.
+
+**Privacy**
+
+Member PII is protected through layered controls beginning upstream of Cohere. A named entity recognition pipeline automatically detects and redacts SSNs, account numbers, and member identifiers before any document enters the RAG ingestion pipeline. Data residency is enforced through private VPC or on-premises deployment for all member data workloads. A Data Processing Addendum prohibits Cohere from using enterprise data for model training. Restricted and confidential data requires Privacy Officer approval before any use in a Cohere-powered workflow. Retention mapping is maintained to ensure Cohere's default log deletion behavior aligns with enterprise and regulatory retention requirements.
+
+**Security**
+
+Access to Cohere endpoints is restricted through role-based access controls provisioned via the enterprise IAM platform. Multi-factor authentication is enforced for all North platform users. API credentials are managed through enterprise secrets management with defined rotation schedules and least-privilege enforcement. All prompts and completions are logged to the enterprise SIEM with 12-month retention and automated alerting. The AI incident response playbook covers Cohere-specific attack vectors including prompt injection, credential exposure, and data exfiltration scenarios. Shadow AI audits are conducted quarterly to detect unauthorized Cohere deployments across business units.
+
+---
+
+## Section 7: Monitoring and Roadmap
+
+### Monitoring
+
+**User Activity**
+All Cohere API usage is logged by user, role, timestamp, and use case. Entitlement reviews confirm that active credentials match current role assignments. After-hours and anomalous usage patterns trigger automated SIEM alerts reviewed by the IT Security Engineer within 24 hours.
+
+**Audit Logs**
+Prompt and completion logs are retained in the enterprise SIEM for a minimum of 12 months. Log integrity is validated monthly. Logs are reviewed following any security incident or governance escalation and are available for regulatory examination on request.
+
+**Incidents and Exceptions**
+All AI incidents involving Cohere — including prompt injection attempts, PII exposure events, output quality failures, and bias findings — are tracked in the enterprise incident management platform. Incidents are classified by severity, assigned to an owner, and closed with documented root cause and remediation. Exceptions to control requirements are tracked separately, require AI Governance Lead approval, and are reviewed quarterly for continued validity.
+
+**Control Effectiveness**
+Each control in the Cohere governance framework is assessed quarterly for operational effectiveness. Evidence is collected per the implementation statement for each control and reviewed by the AI Governance Lead. Controls with evidence gaps or effectiveness failures are escalated to the AI Governance Committee with a remediation plan.
+
+**Model Performance**
+Baseline performance metrics are established for each production use case. Automated monitoring tracks accuracy, hallucination rate, and retrieval precision continuously. Formal quarterly assessments are documented and reviewed by the Model Risk Officer. Findings above defined degradation thresholds trigger the model rollback decision process.
+
+**Bias and Fairness**
+Bias monitoring results for member-facing use cases are reviewed quarterly by the AI Governance Lead and Fair Lending Officer. Results are included in quarterly AI Governance Committee reporting and in the annual model risk management report to the Chief Risk Officer.
+
+---
+
+### 90-Day Governance Roadmap
+
+**Days 0 to 30 — Foundation and Pre-Deployment Validation**
+
+The first 30 days focus on getting every required pre-deployment control live and validated before any production traffic touches Cohere.
+
+- Execute the Data Processing Addendum with Cohere and store in the enterprise contract management system
+- Complete private VPC or Model Vault deployment configuration and validate data residency enforcement with documented evidence
+- Implement and validate PII scrubbing pipeline upstream of all RAG ingestion workflows with effectiveness testing
+- Provision role-based access controls and MFA through the enterprise IAM platform for all initial users
+- Register the first production use case in the enterprise model inventory with model owner and independent validator assigned
+- Configure enterprise SIEM integration for prompt and completion audit logging with automated alerting rules active
+- Draft and socialize the AI incident response playbook covering Cohere-specific scenarios with the IT Security and AI Governance teams
+- Complete the AI use case risk classification for all planned initial deployments and route high-risk use cases to the AI Governance Committee for approval
+- Establish baseline performance metrics for each use case entering production
+
+**Days 31 to 60 — Controlled Deployment and Control Activation**
+
+The second 30 days focus on deploying the first approved use cases under active governance and activating the full monitoring stack.
+
+- Deploy the first approved Cohere use case to production with human-in-the-loop review gates active and AI disclosure labels in place
+- Activate model performance and drift monitoring with thresholds configured and reviewed by the Model Risk Officer
+- Complete initial bias evaluation testing for all member-facing use cases and document results
+- Activate the user feedback and output flagging mechanism and confirm routing to AI Governance Lead inbox
+- Conduct initial model validation including conceptual soundness review for the first production use case
+- Complete onboarding training for all staff with access to Cohere-powered tools covering intended use, prohibited use, and feedback reporting
+- Execute the first vendor security dossier review and confirm current SOC 2 Type II, ISO 27001, and ISO 42001 certifications are on file
+- Conduct tabletop exercise of the AI incident response playbook with the IT Security and AI Governance teams
+- Publish the approved AI tools list and governance intake form to all business units and communicate shadow AI policy
+
+**Days 61 to 90 — Review, Reporting, and Roadmap Maturation**
+
+The final 30 days focus on completing the first full governance review cycle, closing any open gaps, and establishing the ongoing monitoring cadence.
+
+- Conduct the first quarterly model performance assessment and bias evaluation cycle and document results
+- Complete the first quarterly entitlement review and access recertification for all Cohere credentials
+- Complete the first quarterly shadow AI audit using network traffic analysis and procurement review
+- Review all control evidence collected in the first 60 days and identify any gaps requiring remediation
+- Produce the first AI Governance Committee status report covering deployment status, control effectiveness, monitoring findings, and open items
+- Conduct ISO 42001 gap assessment and develop remediation roadmap with assigned owners and target dates
+- Update the Cohere vendor risk dossier with fourth-party cloud infrastructure mapping and include in the enterprise fourth-party risk register
+- Complete rollback procedure documentation and conduct first quarterly rollback capability test
+- Formalize the quarterly monitoring cadence and reporting schedule with all stakeholders confirmed
+- Present 90-day governance summary to the Chief Risk Officer and AI Governance Committee with recommendations for year-one governance priorities
+
+---
+
+*This governance framework was produced as part of an AI Governance portfolio. It is intended for educational and professional demonstration purposes. Repository location: 04-Governance-Frameworks.*
